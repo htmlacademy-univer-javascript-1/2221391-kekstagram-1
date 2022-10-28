@@ -1,6 +1,5 @@
 import { arrayPhotos } from './data.js';
+import{ createPhotos } from './render.js';
 
-arrayPhotos();
-
-
-
+const arr = arrayPhotos();
+createPhotos(arr);
