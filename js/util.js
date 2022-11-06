@@ -13,6 +13,7 @@ function checkLengthOfString(varifiableString,maxLength)
 {
   return varifiableString.length<maxLength;
 }
+checkLengthOfString('text',5);
 function getRandomElement(element)
 {
   return element[getRandomNumber(0,element.length-1)];
