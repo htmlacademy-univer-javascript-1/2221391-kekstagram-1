@@ -1,12 +1,16 @@
+import { openPhoto } from './big-picture.js';
 const templatePicture = document.querySelector('#picture').content;
 const newPictureTemplate = templatePicture.querySelector('.picture');
 const photosContainer = document.querySelector('.pictures');
 
-const createPhoto = function({url, likes, comments}) {
+const createPhoto = function(photo) {
   const clonedPicture = newPictureTemplate.cloneNode(true);
-  clonedPicture.querySelector('.picture__img').src = url;
-  clonedPicture.querySelector('.picture__likes').textContent = likes;
-  clonedPicture.querySelector('.picture__comments').textContent = comments.length;
+  clonedPicture.querySelector('.picture__img').src = photo.url;
+  clonedPicture.querySelector('.picture__likes').textContent = photo.likes;
+  clonedPicture.querySelector('.picture__comments').textContent = photo.comments.length;
+  clonedPicture.addEventListener('click',() => {
+    openPhoto(photo);
+  });
   return clonedPicture;
 };
 
