@@ -21,13 +21,13 @@ const closeByEscape = (evt)=> {
   if (evt.key === 'Escape'){
     body.classList.remove('modal-open');
     bigPicture.classList.add('hidden');
-    document.removeEventListener('keydown', () => closeByEscape);
+    document.removeEventListener('keydown', closeByEscape);
   }
 };
 const closePhoto = () => {
-  body.classList.remove('maodal0open');
+  body.classList.remove('modal-open');
   bigPicture.classList.add('hidden');
-  document.removeEventListener('click', () => closeByEscape);
+  document.removeEventListener('keydown', closeByEscape);
 };
 
 const openPhoto = (phot) =>{
@@ -36,6 +36,7 @@ const openPhoto = (phot) =>{
   bigPicture.querySelector('.big-picture__img img').src = phot.url;
   bigPicture.querySelector('.comments-count').textContent = phot.comments.length;
   bigPicture.querySelector('.social__caption').textContent = phot.description;
+  bigPicture.querySelector('.likes-count').textContent = phot.likes;
   fillComments(phot.comments);
   closeButton.addEventListener('click', closePhoto);
   document.addEventListener('keydown', closeByEscape);
