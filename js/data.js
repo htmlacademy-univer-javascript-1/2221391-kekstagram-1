@@ -37,4 +37,18 @@ const createPhotoDescription = () => {
 };
 
 const arrayPhotos = () => Array.from({length: 25 }, createPhotoDescription);
-export{arrayPhotos};
+
+const MAX_STRING_LENGTH = 140;
+const MAX_HASHTAG_COUNT = 5;
+const MAX_HASHTAG_LENGTH = 20;
+
+const ErrorMessage = {
+  SEPARETED_BY_SPASES: 'Хэш-теги должны разделяться пробелами',
+  START_WITH: 'Хэш-тег должен начинаться с символа #',
+  NO_REPEAT: 'Хэш-теги не должны повторяться',
+  HASHTAG_MAX_LENTH: `Максимальная длина одного хэш-тега ${MAX_HASHTAG_LENGTH} символов, включая #`,
+  MAX_COUNT_HASHTAG: `Нельзя указать больше ${MAX_HASHTAG_COUNT} хэш-тегов`,
+  UNACCEPTABLE_SYMBOLS: 'Хэш-тег содержит недопустимые символы',
+  COMMENT_MAX_LENGTH: `Максимальная длина комментария ${MAX_STRING_LENGTH} символов`
+};
+export{arrayPhotos, ErrorMessage, MAX_HASHTAG_COUNT, MAX_HASHTAG_LENGTH, MAX_STRING_LENGTH};
