@@ -18,4 +18,4 @@ function getRandomElement(element)
 {
   return element[getRandomNumber(0,element.length-1)];
 }
-export {getRandomElement, getRandomNumber};
+export {getRandomElement, getRandomNumber, checkLengthOfString};
