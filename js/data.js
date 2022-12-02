@@ -17,7 +17,7 @@ const createComment = () =>{
   idComm++;
   return{
     id: idComm,
-    avatar: `img/avatar${getRandomNumber(0,6)}.svg`,
+    avatar: `img/avatar-${getRandomNumber(1,6)}.svg`,
     message: getRandomElement(MESSAGES),
     name: getRandomElement(NAMES)
   };
@@ -32,7 +32,7 @@ const createPhotoDescription = () => {
     url: `photos/${idNumber}.jpg`,
     description: getRandomElement(DESCRIPTION),
     likes: getRandomNumber(15,200),
-    comments:  Array.from({length: getRandomNumber(1,10) }, createComment)
+    comments:  Array.from({length: getRandomNumber(1,25) }, createComment)
   };
 };
 
@@ -51,4 +51,6 @@ const ErrorMessage = {
   UNACCEPTABLE_SYMBOLS: 'Хэш-тег содержит недопустимые символы',
   COMMENT_MAX_LENGTH: `Максимальная длина комментария ${MAX_STRING_LENGTH} символов`
 };
-export{arrayPhotos, ErrorMessage, MAX_HASHTAG_COUNT, MAX_HASHTAG_LENGTH, MAX_STRING_LENGTH};
+const UPLOAD_COMMENTS_COUNT = 5;
+const DEFAULT_COMMENTS_COUNT = 5;
+export{arrayPhotos, ErrorMessage, MAX_HASHTAG_COUNT, MAX_HASHTAG_LENGTH, MAX_STRING_LENGTH, DEFAULT_COMMENTS_COUNT,UPLOAD_COMMENTS_COUNT};
