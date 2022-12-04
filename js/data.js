@@ -53,4 +53,71 @@ const ErrorMessage = {
 };
 const UPLOAD_COMMENTS_COUNT = 5;
 const DEFAULT_COMMENTS_COUNT = 5;
-export{arrayPhotos, ErrorMessage, MAX_HASHTAG_COUNT, MAX_HASHTAG_LENGTH, MAX_STRING_LENGTH, DEFAULT_COMMENTS_COUNT,UPLOAD_COMMENTS_COUNT};
+const ScaleImg = {
+  MIN: 25,
+  MAX: 100,
+  STEP: 25
+};
+const Effects = {
+  chrome: {
+    filter: 'grayscale',
+    units: '',
+    options: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1,
+    }
+  },
+  sepia: {
+    filter: 'sepia',
+    units: '',
+    options: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1,
+    }
+  },
+  marvin: {
+    filter: 'invert',
+    units: '%',
+    options: {
+      range: {
+        min: 0,
+        max: 100,
+      },
+      start: 100,
+      step: 1,
+    }
+  },
+  phobos: {
+    filter: 'blur',
+    units: 'px',
+    options: {
+      range: {
+        min: 0,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1,
+    }
+  },
+  heat: {
+    filter: 'brightness',
+    units: '',
+    options: {
+      range: {
+        min: 1,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1,
+    }
+  }
+};
+export{arrayPhotos, ErrorMessage, MAX_HASHTAG_COUNT, MAX_HASHTAG_LENGTH, MAX_STRING_LENGTH, DEFAULT_COMMENTS_COUNT,UPLOAD_COMMENTS_COUNT, ScaleImg,Effects};
