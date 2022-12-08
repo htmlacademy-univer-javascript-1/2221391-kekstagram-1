@@ -1,5 +1,7 @@
 import { checkLengthOfString } from './util.js';
-import { ErrorMessage, MAX_HASHTAG_COUNT, MAX_HASHTAG_LENGTH, MAX_STRING_LENGTH } from './data.js';
+import { ErrorMessage, MAX_HASHTAG_COUNT, MAX_HASHTAG_LENGTH, MAX_STRING_LENGTH, ScaleImg } from './data.js';
+import { onScaleButtonClick, scaleContainer } from './photo-scale.js';
+import { effectList, onEffectButtonChange, sliderFile } from './effects.js';
 
 const body = document.querySelector('body');
 const imgUploadField = document.querySelector('#upload-file');
@@ -9,6 +11,8 @@ const form = document.querySelector('.img-upload__form');
 const closeButton = document.querySelector('.img-upload__cancel');
 const hashtagsText = document.querySelector('.text__hashtags');
 const commentsText = document.querySelector('.text__description');
+const imgPreview = document.querySelector('.img-upload__preview').querySelector('img');
+
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -19,6 +23,10 @@ const pristine = new Pristine(form, {
 const closeUploadPopup = () => {
   editPicture.classList.add('hidden');
   body.classList.remove('modal-open');
+  scaleContainer.removeEventListener('click', onScaleButtonClick);
+  effectList.removeEventListener('change', onEffectButtonChange);
+  imgPreview.removeAttribute('class');
+  imgPreview.removeAttribute('style');
   form.reset();
 };
 
@@ -35,10 +43,10 @@ const onCloseButtonClick = () =>{
 };
 
 const addFocusListeners = (field) => {
-  field.addEventListeners('focus', () =>{
-    document.removeEventListener('keydown',onEscKeydown);
+  field.addEventListener('focus', () => {
+    document.removeEventListener('keydown', onEscKeydown);
   });
-  field.addEventListeners('blur', () =>{
+  field.addEventListener('blur', () => {
     document.addEventListener('keydown', onEscKeydown);
   });
 };
@@ -52,6 +60,10 @@ const onImgUploadFieldChange = () => {
   body.classList.add('modal-open');
   closeButton.addEventListener('click', onCloseButtonClick );
   document.addEventListener('keydown', onEscKeydown);
+  sliderFile.classList.add('hidden');
+  scaleContainer.addEventListener('click', onScaleButtonClick);
+  effectList.addEventListener('change', onEffectButtonChange);
+  imgPreview.style.transform = `scale(${ScaleImg.MAX / 100})`;
   addFocusListeners(hashtagsText);
   addFocusListeners(commentsText);
   buttonAvailability();
@@ -160,4 +172,4 @@ const openUploadForm = () => {
   validateForm();
 };
 
-export { openUploadForm };
+export { openUploadForm, imgPreview };
