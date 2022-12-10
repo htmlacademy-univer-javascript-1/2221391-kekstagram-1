@@ -43,7 +43,7 @@ const MAX_HASHTAG_COUNT = 5;
 const MAX_HASHTAG_LENGTH = 20;
 
 const ErrorMessage = {
-  SEPARETED_BY_SPASES: 'Хэш-теги должны разделяться пробелами',
+  SEPARETED_BY_SPACES: 'Хэш-теги должны разделяться пробелами',
   START_WITH: 'Хэш-тег должен начинаться с символа #',
   NO_REPEAT: 'Хэш-теги не должны повторяться',
   HASHTAG_MAX_LENTH: `Максимальная длина одного хэш-тега ${MAX_HASHTAG_LENGTH} символов, включая #`,

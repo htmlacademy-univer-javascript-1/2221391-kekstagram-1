@@ -1,7 +1,8 @@
-import { checkLengthOfString } from './util.js';
+import { checkLengthOfString, showError, showSuccess } from './util.js';
 import { ErrorMessage, MAX_HASHTAG_COUNT, MAX_HASHTAG_LENGTH, MAX_STRING_LENGTH, ScaleImg } from './data.js';
 import { onScaleButtonClick, scaleContainer } from './photo-scale.js';
 import { effectList, onEffectButtonChange, sliderFile } from './effects.js';
+import { sendData } from './fetchReq.js';
 
 const body = document.querySelector('body');
 const imgUploadField = document.querySelector('#upload-file');
@@ -20,25 +21,29 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__error-text'
 });
 
-const closeUploadPopup = () => {
+const closePopup = () => {
   editPicture.classList.add('hidden');
   body.classList.remove('modal-open');
   scaleContainer.removeEventListener('click', onScaleButtonClick);
   effectList.removeEventListener('change', onEffectButtonChange);
+};
+const closePopupAndClearForm = () =>{
+  closePopup();
   imgPreview.removeAttribute('class');
   imgPreview.removeAttribute('style');
+  imgPreview.style.transform = `scale(${ScaleImg.MAX / 100})`;
   form.reset();
 };
 
 const onEscKeydown = (evt) =>{
   if(evt.key === 'Escape') {
-    closeUploadPopup();
+    closePopupAndClearForm();
     document.removeEventListener('keydown', onEscKeydown);
   }
 };
 
 const onCloseButtonClick = () =>{
-  closeUploadPopup();
+  closePopupAndClearForm();
   document.removeEventListener('keydown', onEscKeydown);
 };
 
@@ -54,16 +59,16 @@ const addFocusListeners = (field) => {
 const buttonAvailability = () => {
   submitButton.disabled = !pristine.validate();
 };
+const doActionWithClassHidden = () => imgPreview.hasAttribute('class') ? sliderFile.classList.remove('hidden') : sliderFile.classList.add('hidden');
 
 const onImgUploadFieldChange = () => {
   editPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   closeButton.addEventListener('click', onCloseButtonClick );
   document.addEventListener('keydown', onEscKeydown);
-  sliderFile.classList.add('hidden');
+  doActionWithClassHidden();
   scaleContainer.addEventListener('click', onScaleButtonClick);
   effectList.addEventListener('change', onEffectButtonChange);
-  imgPreview.style.transform = `scale(${ScaleImg.MAX / 100})`;
   addFocusListeners(hashtagsText);
   addFocusListeners(commentsText);
   buttonAvailability();
@@ -96,7 +101,7 @@ const hashtagsHandler = (text) => {
   const rules = [
     {
       check: inputHashtags.some((item) => item.indexOf('#', 1) >= 1),
-      error: ErrorMessage.SEPARETED_BY_SPASES,
+      error: ErrorMessage.SEPARETED_BY_SPACES,
     },
 
     {
@@ -165,11 +170,30 @@ const onHashtagInput = () => buttonAvailability();
 
 const onCommentInput = () => buttonAvailability();
 
+const sendForm = (onSuccess, onError) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    submitButton.disabled = true;
+    sendData(
+      () => {
+        onSuccess();
+        showSuccess();
+      },
+      () => {
+        onError();
+        showError();
+      },
+      new FormData(form),
+    );
+  });
+};
+
 const openUploadForm = () => {
   imgUploadField.addEventListener('change', onImgUploadFieldChange);
   hashtagsText.addEventListener('input', onHashtagInput);
   commentsText.addEventListener('input', onCommentInput);
-  validateForm();
+  sendForm(closePopupAndClearForm, closePopup);
+  validateForm(closePopupAndClearForm,closePopup);
 };
 
 export { openUploadForm, imgPreview };
