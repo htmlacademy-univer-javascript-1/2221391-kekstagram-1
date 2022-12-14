@@ -1,3 +1,5 @@
+import { TIMEOUT_DELAY } from './data.js';
+
 const successTemplate = document.querySelector('#success').content;
 const errorTemplate = document.querySelector('#error').content;
 
@@ -90,5 +92,29 @@ const alertError =(message) => {
 
   setTimeout(() => alertContainer.remove(), 5000);
 };
+const shuffleArray = (arr) => arr.map((a) => [Math.random(), a]).sort((a, b) => a[0] - b[0]).map((a) => a[1]);
 
-export {getRandomElement, getRandomNumber, checkLengthOfString, alertError, showSuccess, showError};
+const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+const throttle = (callback, delayBetweenFrames) => {
+  let lastTime = 0;
+
+  return (...rest) => {
+    const now = new Date();
+
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
+  };
+};
+
+export {getRandomElement, getRandomNumber, checkLengthOfString, alertError, showSuccess, showError,throttle, debounce,shuffleArray};

@@ -21,4 +21,10 @@ const createPhotos = function(photos) {
   }
   photosContainer.appendChild(fragment);
 };
-export{createPhotos};
+
+const removePhotos = () => {
+  const pictures = document.querySelectorAll('.picture');
+  pictures.forEach((picture) => picture.remove());
+};
+
+export{createPhotos,removePhotos};
