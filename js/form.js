@@ -1,5 +1,5 @@
 import { checkLengthOfString, showError, showSuccess } from './util.js';
-import { ErrorMessage, MAX_HASHTAG_COUNT, MAX_HASHTAG_LENGTH, MAX_STRING_LENGTH, ScaleImg } from './data.js';
+import { ErrorMessage, MAX_HASHTAG_COUNT, MAX_HASHTAG_LENGTH, MAX_STRING_LENGTH, ScaleImg, FILE_TYPES } from './data.js';
 import { onScaleButtonClick, scaleContainer } from './photo-scale.js';
 import { effectList, onEffectButtonChange, sliderFile } from './effects.js';
 import { sendData } from './fetchReq.js';
@@ -61,6 +61,14 @@ const buttonAvailability = () => {
 };
 const doActionWithClassHidden = () => imgPreview.hasAttribute('class') ? sliderFile.classList.remove('hidden') : sliderFile.classList.add('hidden');
 
+const uploadPhoto = (evt) => {
+  const file = evt.target.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    imgPreview.src = URL.createObjectURL(file);
+  }
+};
 const onImgUploadFieldChange = () => {
   editPicture.classList.remove('hidden');
   body.classList.add('modal-open');
@@ -190,6 +198,7 @@ const sendForm = (onSuccess, onError) => {
 
 const openUploadForm = () => {
   imgUploadField.addEventListener('change', onImgUploadFieldChange);
+  imgUploadField.addEventListener('change', uploadPhoto);
   hashtagsText.addEventListener('input', onHashtagInput);
   commentsText.addEventListener('input', onCommentInput);
   sendForm(closePopupAndClearForm, closePopup);
