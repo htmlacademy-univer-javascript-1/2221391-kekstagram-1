@@ -1,4 +1,4 @@
-import { TIMEOUT_DELAY } from './data.js';
+import { TIMEOUT_DELAY} from './data.js';
 
 const successTemplate = document.querySelector('#success').content;
 const errorTemplate = document.querySelector('#error').content;
@@ -116,5 +116,6 @@ const throttle = (callback, delayBetweenFrames) => {
     }
   };
 };
+
 
 export {getRandomElement, getRandomNumber, checkLengthOfString, alertError, showSuccess, showError,throttle, debounce,shuffleArray};
